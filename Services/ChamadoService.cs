@@ -14,5 +14,21 @@ namespace DeskFlowApi.Services
         {
             return _repository.Listar();
         }
+        public void BuscarPorId(int id)
+        {
+            _repository.BuscarPorId(id);
+        }
+        public void Adicionar(Chamado chamado)
+        {
+            _repository.Adicionar(chamado);
+        }
+        public void Atualizar(Chamado chamado)
+        {
+            _repository.Atualizar(chamado);
+        }
+        public void Deletar(Chamado chamado)
+        {
+            _repository.Deletar(chamado);
+        }
     }
 }
