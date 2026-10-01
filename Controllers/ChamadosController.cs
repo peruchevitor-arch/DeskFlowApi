@@ -13,17 +13,18 @@ namespace DeskFlowApi.Controllers
         {
             _service = service;
         }
-        [HttpGet("{id}")]
+        [HttpGet]
         public IActionResult Listar()
         {
             return Ok(_service.Listar());
         }
-        [HttpPost]
+        [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
             _service.BuscarPorId(id);
             return Ok();
         }
+        [HttpPost]
         public IActionResult Adicionar(Chamado chamado)
         {
             _service.Adicionar(chamado);
