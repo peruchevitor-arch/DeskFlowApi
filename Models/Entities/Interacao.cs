@@ -8,5 +8,6 @@ namespace DeskFlowApi.Models
         public string Autor {get; set;}
         public string Mensagem {get; set;}
         public DateTime DataRegistro {get; set;}
+        public Chamado Chamado { get; set; }
     }
 }

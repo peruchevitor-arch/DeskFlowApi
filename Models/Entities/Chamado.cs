@@ -13,5 +13,6 @@ namespace DeskFlowApi.Models
         public DateTime DataFechamento {get; set;}
         public string Solucao {get; set;}
         public int CategoriaId {get; set;}
+        public Categoria Categoria { get; set; }
     }
 }

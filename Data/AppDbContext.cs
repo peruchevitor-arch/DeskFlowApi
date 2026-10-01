@@ -10,22 +10,23 @@ namespace DeskFlowApi.Context
             : base(options)
         {
         }
-    public DbSet<Chamado> Chamados {get; set;}
+        public DbSet<Chamado> Chamados { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<Interacao> Interacoes { get; set; }
 
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Chamado>(entity =>
-            {
-                entity.HasKey(x => x.Id);
+           modelBuilder.Entity<Chamado>()
+                .HasOne(c => c.Categoria)
+                .WithMany()
+                .HasForeignKey(c => c.CategoriaId);
+           modelBuilder.Entity<Interacao>()
+                .HasOne(i => i.Chamado)
+                .WithMany()
+                .HasForeignKey(i => i.ChamadoId);
 
-                entity.Property(x => x.Titulo)
-                    .HasColumnName("Titulo");
-
-                entity.Property(x => x.Descricao)
-                    .HasColumnName("Descricao");
-            });
+            
         }
-
     }
 }

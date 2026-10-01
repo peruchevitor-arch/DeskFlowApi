@@ -1,4 +1,5 @@
 using DeskFlowApi.Models;
+using DeskFlowApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeskFlowApi.Controllers
@@ -7,10 +8,15 @@ namespace DeskFlowApi.Controllers
     [Route("api/chamados")]
     public class ChamadosController : ControllerBase
     {
+    private readonly ChamadoService _service;
+    public ChamadosController(ChamadoService service)
+    {
+        _service = service;
+    }
     [HttpGet]
     public IActionResult Listar()
     {
-        return Ok("Funcionou!");
+        return Ok(_service.Listar());
     }
     }
 }
