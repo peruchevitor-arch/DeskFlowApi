@@ -14,9 +14,9 @@ namespace DeskFlowApi.Services
         {
             return _repository.Listar();
         }
-        public void BuscarPorId(int id)
+        public Interacao? BuscarPorId(int id)
         {
-            _repository.BuscarPorId(id);
+            return _repository.BuscarPorId(id);
         }
         public void Adicionar(Interacao interacao)
         {
