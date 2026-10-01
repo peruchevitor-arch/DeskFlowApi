@@ -10,7 +10,7 @@ namespace DeskFlowApi.Services
         {
             _repository = repository;
         }
-         public List<Chamado> Listar()
+        public List<Chamado> Listar()
         {
             return _repository.Listar();
         }
@@ -29,6 +29,32 @@ namespace DeskFlowApi.Services
         public void Deletar(Chamado chamado)
         {
             _repository.Deletar(chamado);
+        }
+        public void IniciarChamado(int id)
+        {
+            var chamado = _repository.BuscarPorId(id);
+
+            if (chamado == null)
+            {
+                throw new Exception("chamado nao encontrado");
+            }
+            chamado.Status = Status.EmAndamento;
+            _repository.Atualizar(chamado);
+        }
+        public void FecharChamado(int id, string solucao)
+        {
+            var chamado = _repository.BuscarPorId(id);
+
+            if (chamado == null)
+            {
+                throw new Exception("Chamado não encontrado.");
+            }
+
+            chamado.Status = Status.Fechado;
+            chamado.DataFechamento = DateTime.Now;
+            chamado.Solucao = solucao;
+
+            _repository.Atualizar(chamado);
         }
     }
 }

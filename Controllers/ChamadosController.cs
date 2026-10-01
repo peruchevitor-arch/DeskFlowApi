@@ -42,5 +42,18 @@ namespace DeskFlowApi.Controllers
             _service.Deletar(chamado);
             return Ok();
         }
+        [HttpPost("{id}/iniciar")]
+        public IActionResult IniciarChamado(int id)
+        {
+            _service.IniciarChamado(id);
+            return Ok();
+        }
+        [HttpPost("{id}/fechar")]
+        public IActionResult FecharChamado(int id,string solucao)
+        {
+            _service.FecharChamado(id,solucao);
+            return Ok();
+        }
+        
     }
 }

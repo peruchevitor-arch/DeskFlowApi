@@ -33,5 +33,11 @@ namespace DeskFlowApi.Repositories
             _context.Interacoes.Remove(interacao);
             _context.SaveChanges();
         }
+        public List<Interacao> ListarPorChamado(int chamadoId)
+        {
+            return _context.Interacoes
+                .Where(i => i.ChamadoId == chamadoId)
+                .ToList();
+        }
     }
 }

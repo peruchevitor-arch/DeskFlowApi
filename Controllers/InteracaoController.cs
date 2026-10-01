@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DeskFlowApi.Controllers
 {
     [ApiController]
-    [Route("api/chamados")]
+    [Route("api/interacoes")]
     public class InteracaoController : ControllerBase
     {
         private readonly InteracaoService _service;
@@ -40,6 +40,11 @@ namespace DeskFlowApi.Controllers
         {
             _service.Deletar(interacao);
             return Ok();
+        }
+        [HttpGet("chamado/{chamadoId}")]
+        public IActionResult ListarPorChamado(int chamadoId)
+        {
+            return Ok(_service.ListarPorChamado(chamadoId));
         }
     }
 }

@@ -30,5 +30,9 @@ namespace DeskFlowApi.Services
         {
             _repository.Deletar(interacao);
         }
+        public List<Interacao> ListarPorChamado(int chamadoId)
+        {
+            return _repository.ListarPorChamado(chamadoId);
+        }
     }
 }
