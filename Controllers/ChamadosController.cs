@@ -16,9 +16,9 @@ namespace DeskFlowApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Listar()
+        public IActionResult Listar(Status? status,Prioridade? prioridade,int? categoriaId)
         {
-            return Ok(_service.Listar());
+            return Ok(_service.Listar(status, prioridade, categoriaId));
         }
 
         [HttpGet("{id}")]

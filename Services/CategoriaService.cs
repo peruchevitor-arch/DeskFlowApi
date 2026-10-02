@@ -10,7 +10,7 @@ namespace DeskFlowApi.Services
         {
             _repository = repository;
         }
-         public List<Categoria> Listar()
+        public List<Categoria> Listar()
         {
             return _repository.Listar();
         }
@@ -28,6 +28,12 @@ namespace DeskFlowApi.Services
         }
         public void Deletar(Categoria categoria)
         {
+            if (_repository.PossuiChamados(categoria.Id))
+            {
+                throw new InvalidOperationException(
+                    "Não é possível excluir uma categoria que possui chamados associados.");
+            }
+
             _repository.Deletar(categoria);
         }
     }

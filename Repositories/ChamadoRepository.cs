@@ -11,9 +11,26 @@ namespace DeskFlowApi.Repositories
         {
             _context = context;
         }
-        public List<Chamado> Listar()
+        public List<Chamado> Listar(Status? status, Prioridade? prioridade, int? categoriaId)
         {
-            return _context.Chamados.ToList();
+            var consulta = _context.Chamados.AsQueryable();
+
+            if (status.HasValue)
+            {
+                consulta = consulta.Where(c => c.Status == status.Value);
+            }
+
+            if (prioridade.HasValue)
+            {
+                consulta = consulta.Where(c => c.Prioridade == prioridade.Value);
+            }
+
+            if (categoriaId.HasValue)
+            {
+                consulta = consulta.Where(c => c.CategoriaId == categoriaId.Value);
+            }
+
+            return consulta.ToList();
         }
         public Chamado? BuscarPorId(int Id)
         {

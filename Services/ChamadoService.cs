@@ -16,11 +16,10 @@ namespace DeskFlowApi.Services
             _categoriaRepository = categoriaRepository;
         }
 
-        public List<Chamado> Listar()
+        public List<Chamado> Listar(Status? status, Prioridade? prioridade, int? categoriaId)
         {
-            return _repository.Listar();
+            return _repository.Listar(status, prioridade, categoriaId);
         }
-
         public Chamado? BuscarPorId(int id)
         {
             return _repository.BuscarPorId(id);

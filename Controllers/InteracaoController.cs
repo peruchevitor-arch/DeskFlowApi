@@ -34,6 +34,14 @@ namespace DeskFlowApi.Controllers
             return Ok();
         }
 
+        [HttpPost("~/api/chamados/{id}/interacoes")]
+        public IActionResult AdicionarPorChamado(int id, [FromBody] Interacao interacao)
+        {
+            interacao.ChamadoId = id;
+            _service.Adicionar(interacao);
+            return Ok();
+        }
+
         [HttpPut]
         public IActionResult Atualizar([FromBody] Interacao interacao)
         {
