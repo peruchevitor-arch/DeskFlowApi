@@ -9,38 +9,45 @@ namespace DeskFlowApi.Controllers
     public class InteracaoController : ControllerBase
     {
         private readonly InteracaoService _service;
+
         public InteracaoController(InteracaoService service)
         {
             _service = service;
         }
+
         [HttpGet]
         public IActionResult Listar()
         {
             return Ok(_service.Listar());
         }
+
         [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
             return Ok(_service.BuscarPorId(id));
         }
+
         [HttpPost]
-        public IActionResult Adicionar(Interacao interacao)
+        public IActionResult Adicionar([FromBody] Interacao interacao)
         {
             _service.Adicionar(interacao);
             return Ok();
         }
+
         [HttpPut]
-        public IActionResult Atualizar(Interacao interacao)
+        public IActionResult Atualizar([FromBody] Interacao interacao)
         {
             _service.Atualizar(interacao);
             return Ok();
         }
+
         [HttpDelete]
-        public IActionResult Deletar(Interacao interacao)
+        public IActionResult Deletar([FromBody] Interacao interacao)
         {
             _service.Deletar(interacao);
             return Ok();
         }
+
         [HttpGet("chamado/{chamadoId}")]
         public IActionResult ListarPorChamado(int chamadoId)
         {

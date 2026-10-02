@@ -1,5 +1,6 @@
 using DeskFlowApi.Context;
 using DeskFlowApi.Models;
+using Microsoft.EntityFrameworkCore;
 namespace DeskFlowApi.Repositories
 {
     public class ChamadoRepository
@@ -16,7 +17,10 @@ namespace DeskFlowApi.Repositories
         }
         public Chamado? BuscarPorId(int Id)
         {
-            return _context.Chamados.FirstOrDefault(x => x.Id == Id);
+            return _context.Chamados
+                .Include(c => c.Categoria)
+                .Include(c => c.Interacoes)
+                .FirstOrDefault(c => c.Id == Id);
         }
         public void Adicionar(Chamado chamado)
         {

@@ -1,4 +1,6 @@
 using DeskFlowApi.Models;
+using System.ComponentModel.DataAnnotations;
+
 namespace DeskFlowApi.Models
 {
     public class Chamado
@@ -14,5 +16,6 @@ namespace DeskFlowApi.Models
         public string Solucao {get; set;}
         public int CategoriaId {get; set;}
         public Categoria Categoria { get; set; }
+        public List<Interacao> Interacoes { get; set; }
     }
 }

@@ -23,7 +23,7 @@ namespace DeskFlowApi.Context
                 .HasForeignKey(c => c.CategoriaId);
            modelBuilder.Entity<Interacao>()
                 .HasOne(i => i.Chamado)
-                .WithMany()
+                .WithMany(c => c.Interacoes)
                 .HasForeignKey(i => i.ChamadoId);
 
             
