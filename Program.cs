@@ -2,6 +2,7 @@ using DeskFlowApi.Services;
 using DeskFlowApi.Context;
 using Microsoft.EntityFrameworkCore;
 using DeskFlowApi.Repositories;
+using DeskFlowApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,8 +30,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapControllers();
-
 app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
+app.MapControllers();
 
 app.Run();

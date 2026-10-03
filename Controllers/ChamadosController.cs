@@ -24,7 +24,14 @@ namespace DeskFlowApi.Controllers
         [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
-            return Ok(_service.BuscarPorId(id));
+            var chamado = _service.BuscarPorId(id);
+
+            if (chamado == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(chamado);
         }
 
         [HttpPost]
