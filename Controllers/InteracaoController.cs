@@ -24,36 +24,64 @@ namespace DeskFlowApi.Controllers
         [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
-            return Ok(_service.BuscarPorId(id));
+            var interacao = _service.BuscarPorId(id);
+
+            if (interacao == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(interacao);
         }
 
         [HttpPost]
         public IActionResult Adicionar([FromBody] Interacao interacao)
         {
             _service.Adicionar(interacao);
-            return Ok();
+
+            return CreatedAtAction(
+                nameof(BuscarPorId),
+                new { id = interacao.Id },
+                interacao
+            );
         }
 
         [HttpPost("~/api/chamados/{id}/interacoes")]
-        public IActionResult AdicionarPorChamado(int id, [FromBody] Interacao interacao)
+        public IActionResult AdicionarPorChamado(
+            int id,
+            [FromBody] Interacao interacao)
         {
             interacao.ChamadoId = id;
             _service.Adicionar(interacao);
-            return Ok();
+
+            return CreatedAtAction(
+                nameof(BuscarPorId),
+                new { id = interacao.Id },
+                interacao
+            );
         }
 
         [HttpPut]
         public IActionResult Atualizar([FromBody] Interacao interacao)
         {
             _service.Atualizar(interacao);
-            return Ok();
+
+            return NoContent();
         }
 
-        [HttpDelete]
-        public IActionResult Deletar([FromBody] Interacao interacao)
+        [HttpDelete("{id}")]
+        public IActionResult Deletar(int id)
         {
+            var interacao = _service.BuscarPorId(id);
+
+            if (interacao == null)
+            {
+                return NotFound();
+            }
+
             _service.Deletar(interacao);
-            return Ok();
+
+            return NoContent();
         }
 
         [HttpGet("chamado/{chamadoId}")]

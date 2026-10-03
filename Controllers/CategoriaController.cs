@@ -24,28 +24,49 @@ namespace DeskFlowApi.Controllers
         [HttpGet("{id}")]
         public IActionResult BuscarPorId(int id)
         {
-            return Ok(_service.BuscarPorId(id));
+            var categoria = _service.BuscarPorId(id);
+
+            if (categoria == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(categoria);
         }
 
         [HttpPost]
         public IActionResult Adicionar([FromBody] Categoria categoria)
         {
             _service.Adicionar(categoria);
-            return Ok();
+
+            return CreatedAtAction(
+                nameof(BuscarPorId),
+                new { id = categoria.Id },
+                categoria
+            );
         }
 
         [HttpPut]
         public IActionResult Atualizar([FromBody] Categoria categoria)
         {
             _service.Atualizar(categoria);
-            return Ok();
+
+            return NoContent();
         }
 
-        [HttpDelete]
-        public IActionResult Deletar([FromBody] Categoria categoria)
+        [HttpDelete("{id}")]
+        public IActionResult Deletar(int id)
         {
+            var categoria = _service.BuscarPorId(id);
+
+            if (categoria == null)
+            {
+                return NotFound();
+            }
+
             _service.Deletar(categoria);
-            return Ok();
+
+            return NoContent();
         }
     }
 }
