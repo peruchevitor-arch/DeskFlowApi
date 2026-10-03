@@ -38,35 +38,35 @@ namespace DeskFlowApi.Controllers
         public IActionResult Adicionar([FromBody] Chamado chamado)
         {
             _service.Adicionar(chamado);
-            return Ok();
+            return CreatedAtAction(nameof(BuscarPorId),new { id = chamado.Id }, chamado); 
         }
 
         [HttpPut]
         public IActionResult Atualizar([FromBody] Chamado chamado)
         {
             _service.Atualizar(chamado);
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete]
         public IActionResult Deletar([FromBody] Chamado chamado)
         {
             _service.Deletar(chamado);
-            return Ok();
+            return NoContent();
         }
 
         [HttpPost("{id}/iniciar")]
         public IActionResult IniciarChamado(int id)
         {
             _service.IniciarChamado(id);
-            return Ok();
+            return NoContent();
         }
 
         [HttpPost("{id}/encerrar")]
         public IActionResult FecharChamado(int id, [FromBody] string solucao)
         {
             _service.FecharChamado(id, solucao);
-            return Ok();
+            return NoContent();
         }
     }
 }
