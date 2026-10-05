@@ -1,6 +1,6 @@
 # DeskFlow API
 
-- Nome: Vitor Peruch
+-Nome: Vitor Peruch
   
 -Turma: backend-netv1-ciclo2
 
@@ -139,3 +139,29 @@ Assim, quando acontece algum erro inesperado, a API retorna uma resposta organiz
 ## Injeção de dependência
 
 Os Services e Repositories são registrados no `Program.cs` usando injeção
+## 🚀 Como Executar a Aplicação
+
+### Pré-requisitos
+- .NET SDK 10 (ou superior)
+- SQL Server em execução (LocalDB, SQL Server Express ou Docker)
+
+### Passo a Passo
+1. Clone este repositório:
+   git clone https://github.com/seu-usuario/deskflow-api.git
+
+2. Acesse a pasta do projeto:
+   cd deskflow-api/src/DeskFlow.API
+
+3. Configure a Connection String no arquivo `appsettings.json`:
+   "ConnectionStrings": {
+     "DefaultConnection": "Server=localhost;Database=DeskFlowDb;Trusted_Connection=True;TrustServerCertificate=True;"
+   }
+
+4. Execute as Migrations para criar a estrutura no banco de dados:
+   dotnet ef database update
+
+5. Execute a API:
+   dotnet run
+
+6. Acesse a documentação do Swagger para testar os endpoints:
+   https://localhost:7000/swagger
