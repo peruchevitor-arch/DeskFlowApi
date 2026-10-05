@@ -9,3 +9,6 @@ appsettings.Development.json
 *.mdf
 *.ldf
 .env
+Properties/
+.DeskFlowApi.csproj
+.DeskFlowApi.http
