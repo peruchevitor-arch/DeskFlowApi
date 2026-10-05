@@ -16,7 +16,7 @@ namespace DeskFlowApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Listar(Status? status,Prioridade? prioridade,int? categoriaId)
+        public IActionResult Listar(Status? status, Prioridade? prioridade, int? categoriaId)
         {
             return Ok(_service.Listar(status, prioridade, categoriaId));
         }
@@ -38,7 +38,12 @@ namespace DeskFlowApi.Controllers
         public IActionResult Adicionar([FromBody] Chamado chamado)
         {
             _service.Adicionar(chamado);
-            return CreatedAtAction(nameof(BuscarPorId),new { id = chamado.Id }, chamado); 
+
+            return CreatedAtAction(
+                nameof(BuscarPorId),
+                new { id = chamado.Id },
+                chamado
+            );
         }
 
         [HttpPut]
@@ -48,9 +53,16 @@ namespace DeskFlowApi.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
-        public IActionResult Deletar([FromBody] Chamado chamado)
+        [HttpDelete("{id}")]
+        public IActionResult Deletar(int id)
         {
+            var chamado = _service.BuscarPorId(id);
+
+            if (chamado == null)
+            {
+                return NotFound();
+            }
+
             _service.Deletar(chamado);
             return NoContent();
         }
@@ -70,4 +82,3 @@ namespace DeskFlowApi.Controllers
         }
     }
 }
-

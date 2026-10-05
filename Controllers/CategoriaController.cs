@@ -49,6 +49,13 @@ namespace DeskFlowApi.Controllers
         [HttpPut]
         public IActionResult Atualizar([FromBody] Categoria categoria)
         {
+            var existente = _service.BuscarPorId(categoria.Id);
+
+            if (existente == null)
+            {
+                return NotFound();
+            }
+
             _service.Atualizar(categoria);
 
             return NoContent();

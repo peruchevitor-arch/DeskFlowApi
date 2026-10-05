@@ -20,6 +20,7 @@ namespace DeskFlowApi.Services
         {
             return _repository.Listar(status, prioridade, categoriaId);
         }
+
         public Chamado? BuscarPorId(int id)
         {
             return _repository.BuscarPorId(id);
@@ -83,6 +84,12 @@ namespace DeskFlowApi.Services
             {
                 throw new InvalidOperationException(
                     "O chamado não pode ser fechado.");
+            }
+
+            if (string.IsNullOrWhiteSpace(solucao))
+            {
+                throw new InvalidOperationException(
+                    "A solução é obrigatória para encerrar o chamado.");
             }
 
             chamado.Status = Status.Fechado;
