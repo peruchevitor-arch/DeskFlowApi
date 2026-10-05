@@ -2,17 +2,19 @@
 
 Nome: Vitor Peruch
 Turma: backend-netv1-ciclo2
-Vídeo de apresentação: https://futurovideoaq.com
+Vídeo: [colocar link do vídeo aqui]
 
 ## Sobre o projeto
 
-O DeskFlow API é uma Web API para gerenciamento de chamados de TI.
+O DeskFlow API é uma API para gerenciamento de chamados de suporte de TI.
 
-## Tecnologias usadas
+A ideia é ter um sistema onde seja possível cadastrar categorias, criar chamados, acompanhar o status dos chamados e registrar interações durante o atendimento.
 
-* .NET 10
-* ASP.NET Core
+## Tecnologias
+
 * C#
+* .NET 10
+* ASP.NET Core Web API
 * Entity Framework Core
 * SQL Server
 * Swagger
@@ -20,124 +22,103 @@ O DeskFlow API é uma Web API para gerenciamento de chamados de TI.
 
 ## Estrutura do projeto
 
-O projeto foi separado em algumas partes para não ficar tudo dentro dos Controllers.
+O projeto foi separado em algumas partes para organizar melhor o código.
 
-* Controllers
-* Services
-* Repositories
-* Models
-* Context
-* Middlewares
-* Migrations
-
-Os Controllers recebem as requisições.
-
-Os Services possuem as regras de negócio e fazem as validações.
-
-Os Repositories cuidam do acesso ao banco usando Entity Framework.
-
-Os Models representam as entidades do sistema.
-
-O Context possui o AppDbContext, que faz a configuração do banco.
-
-Os Middlewares são usados principalmente para tratar erros da API.
+* Controllers: recebem as requisições da API
+* Services: ficam com as regras de negócio
+* Repositories: fazem as operações com o banco
+* Models: entidades e enums do sistema
+* Context: configuração do Entity Framework e banco
+* Middlewares: tratamento de erros
+* Migrations: controle das alterações do banco
 
 ## Categorias
 
-As categorias servem para organizar os chamados.
+As categorias são usadas para organizar os chamados.
 
-Uma categoria possui:
+É possível:
 
-* Id
-* Nome
+* Criar categoria
+* Listar categorias
+* Buscar categoria por ID
+* Atualizar categoria
+* Excluir categoria
 
-É possível criar, listar, buscar, atualizar e excluir categorias.
-
-Também existe uma validação que impede excluir uma categoria que possui chamados relacionados.
+Não é permitido excluir uma categoria que esteja sendo usada por algum chamado.
 
 ## Chamados
 
-Os chamados possuem:
+Os chamados são a principal parte do sistema.
 
-* Id
-* Titulo
-* Descricao
-* Prioridade
-* Status
-* SolicitanteNome
-* DataAbertura
-* DataFechamento
-* Solucao
-* CategoriaId
+É possível:
 
-As prioridades são:
+* Criar chamado
+* Listar chamados
+* Buscar chamado por ID
+* Atualizar chamado
+* Excluir chamado
+* Filtrar chamados
+* Iniciar chamado
+* Encerrar chamado
 
-* Baixa
-* Media
-* Alta
+Quando um chamado é criado, ele começa com o status Aberto e recebe a data de abertura.
 
-Os status são:
+Os status usados são:
 
 * Aberto
 * EmAndamento
 * Fechado
 
-Quando o chamado é criado ele começa como Aberto e a DataAbertura é preenchida automaticamente.
+Quando o chamado é iniciado, passa para EmAndamento.
 
-Para iniciar um chamado ele passa para EmAndamento.
-
-Para fechar o chamado é necessário informar uma solução. Depois disso ele fica como Fechado e recebe a DataFechamento.
+Quando é encerrado, é necessário informar a solução e o chamado passa para Fechado.
 
 ## Interações
 
-As interações são usadas para guardar mensagens e informações sobre o atendimento.
+As interações servem para registrar mensagens durante o atendimento de um chamado.
 
-Uma interação possui:
+É possível:
 
-* Id
-* ChamadoId
-* Autor
-* Mensagem
-* DataRegistro
-
-É possível criar, listar, buscar, atualizar e excluir interações.
-
-Também é possível listar as interações de um chamado.
+* Criar interação
+* Listar interações
+* Buscar interação por ID
+* Atualizar interação
+* Excluir interação
+* Listar as interações de um chamado
 
 Não é permitido adicionar uma nova interação em um chamado que já foi fechado.
 
 ## Filtros
 
-A API permite filtrar os chamados por:
+Os chamados podem ser filtrados usando parâmetros na URL.
+
+Os filtros são:
 
 * Status
 * Prioridade
-* CategoriaId
+* Categoria
 
-Os filtros podem ser usados pela query string e também podem ser combinados.
+Também é possível combinar os filtros.
 
 Exemplo:
 
-```text
-GET /api/chamados?status=Aberto&prioridade=Alta
-```
+`GET /api/chamados?status=Aberto&prioridade=Alta`
 
 ## Banco de dados
 
-O banco utilizado no projeto é o SQL Server.
+O projeto utiliza SQL Server com Entity Framework Core.
 
-O Entity Framework Core 10 foi utilizado para fazer o mapeamento das entidades e o acesso aos dados.
+As tabelas principais são:
 
-Os relacionamentos principais são:
+* Categorias
+* Chamados
+* Interacoes
 
-* Uma Categoria possui vários Chamados.
-* Um Chamado pertence a uma Categoria.
-* Um Chamado possui várias Interações.
-* Uma Interação pertence a um Chamado.
+Um chamado possui uma categoria e pode ter várias interações.
 
 ## Migrations
 
-As alterações do banco são controladas utilizando Entity Framework Core Migrations.
+As alterações do banco são controladas através das migrations do Entity Framework.
 
 Para atualizar o banco:
 
@@ -147,102 +128,10 @@ dotnet ef database update
 
 ## Tratamento de erros
 
-Foi criado um Middleware para tratamento global de exceções.
+O projeto possui um middleware para tratamento global de exceções.
 
-Ele captura erros que não foram tratados e retorna uma resposta em JSON.
-
-A ideia é não mostrar o stack trace e nem informações internas da aplicação para quem está usando a API.
+Assim, quando acontece algum erro inesperado, a API retorna uma resposta organizada em vez de mostrar informações internas do sistema.
 
 ## Injeção de dependência
 
-Foi utilizada injeção de dependência para registrar Services e Repositories no Program.cs.
-
-A aplicação foi organizada seguindo a separação entre Controller, Service e Repository.
-
-Isso ajuda a deixar cada parte responsável por uma coisa e evita colocar toda a lógica dentro do Controller.
-
-## API REST
-
-A API utiliza rotas seguindo o padrão REST.
-
-Os principais métodos utilizados são:
-
-* GET para buscar dados
-* POST para criar
-* PUT para atualizar
-* DELETE para excluir
-
-Também são utilizados códigos HTTP como:
-
-* 200 OK
-* 201 Created
-* 204 No Content
-* 400 Bad Request
-* 404 Not Found
-* 500 Internal Server Error
-
-## Swagger
-
-O Swagger foi utilizado para visualizar e testar os endpoints da API.
-
-Depois de iniciar o projeto, o endereço do Swagger é mostrado no terminal.
-
-## Como executar
-
-É necessário ter instalado:
-
-* .NET SDK 10
-* SQL Server
-* Entity Framework Core Tools
-
-Para clonar o projeto:
-
-```bash
-git clone https://github.com/peruchevitor-arch/DeskFlowApi.git
-```
-
-Depois entre na pasta do projeto:
-
-```bash
-cd DeskFlowApi
-```
-
-Configure a conexão do SQL Server no appsettings.json.
-
-Exemplo:
-
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=localhost;Database=DeskFlowDb;Trusted_Connection=True;TrustServerCertificate=True;"
-}
-```
-
-Depois execute:
-
-```bash
-dotnet ef database update
-```
-
-E rode a aplicação:
-
-```bash
-dotnet run
-```
-
-Depois é só acessar o Swagger pelo endereço mostrado no terminal.
-
-
-
-A autenticação com JWT não foi implementada porque é uma funcionalidade opcional no requisito.
-
-## Vídeo de apresentação
-
-O vídeo apresenta o funcionamento da API, os endpoints, o Swagger e a estrutura do projeto.
-
-Link: https://completar-aqui.com
-
-## Autor
-
-Vitor Peruch
-
-Turma: backend-netv1-ciclo2
+Os Services e Repositories são registrados no `Program.cs` usando injeção
