@@ -2,7 +2,8 @@
 
 Nome: Vitor Peruch
 Turma: backend-netv1-ciclo2
-Vídeo: [colocar link do vídeo aqui]
+Vídeo: https://drive.google.com/file/d/1HjaDZx3chaRY7THWd4qgo12KlzqqbCIJ/view?usp=drive_link
+obs:meu microfone esta com problemas e quebrado, não consegui providenciar peço desculpas se acaso não conseguirem entender o audio.
 
 ## Sobre o projeto
 
